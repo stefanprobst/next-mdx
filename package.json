@@ -61,7 +61,15 @@
     ],
     "parserOptions": {
       "project": "./tsconfig.json"
-    }
+    },
+    "overrides": [
+      {
+        "files": "*.d.ts",
+        "rules": {
+          "import/export": "off"
+        }
+      }
+    ]
   },
   "husky": {
     "hooks": {
