@@ -1,10 +1,10 @@
 module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
-  const extension = pluginOptions.extension || /\.(md|mdx)$/
   return {
     ...nextConfig,
     webpack(config, options) {
       config.module.rules.push({
-        test: extension,
+        test: pluginOptions.extension || /\.(md|mdx)$/,
+        exclude: pluginOptions.exclude,
         use: [
           options.defaultLoaders.babel,
           {
