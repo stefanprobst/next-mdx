@@ -8,9 +8,9 @@ with added YAML frontmatter support and typescript declarations for importing
 ## YAML Frontmatter
 
 The mdx webpack loader supports exporting metadata as a named export from an
-`.mdx` file: `export const meta { title: 'Home Page' }`. One common convention
-in plain markdown files has been to export metadata in a YAML section at the top
-of an `.md` file. This plugin adds that (following the
+`.mdx` file: `export const metadata { title: 'Home Page' }`. One common
+convention in plain markdown files has been to export metadata in a YAML section
+at the top of an `.md` file. This plugin adds that (following the
 [official example](https://mdxjs.com/guides/custom-loader#custom-loader)).
 
 ## How to use
@@ -40,5 +40,5 @@ To add support for importing `.mdx` files in Next.js, add the following to
 /// <reference types="@stefanprobst/next-mdx" />
 ```
 
-This will add support for the mdx content as the default export, and a `meta`
-named export for metadata.
+This will add support for the mdx content as the default export, and a
+`metadata` named export for metadata.

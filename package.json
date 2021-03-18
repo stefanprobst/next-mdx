@@ -66,7 +66,8 @@
       {
         "files": "*.d.ts",
         "rules": {
-          "import/export": "off"
+          "import/export": "off",
+          "import/no-duplicates": "off"
         }
       }
     ]

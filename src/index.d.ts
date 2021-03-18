@@ -1,6 +1,15 @@
+declare module '*.md' {
+  import type { FC } from 'react'
+  const metadata: { [key: string]: unknown }
+  const MDXComponent: FC
+  export { metadata }
+  export default MDXComponent
+}
+
 declare module '*.mdx' {
-  const meta: { [key: string]: unknown }
-  const MDXComponent: (props: any) => JSX.Element
-  export { meta }
+  import type { FC } from 'react'
+  const metadata: { [key: string]: unknown }
+  const MDXComponent: FC
+  export { metadata }
   export default MDXComponent
 }
