@@ -1,7 +1,11 @@
 const { process } = require('babel-jest')
 const processors = require('./processors')
 
-/** @type {(userOptions: { remarkPlugins: Array<import('unified').Plugin>, rehypePlugins: Array<import('unified').Plugin> }) => import('@jest/transform').Transformer} */
+/**
+ * @typedef {{ remarkPlugins?: Array<import('unified').Plugin>; rehypePlugins?: Array<import('unified').Plugin> }} MdxOptions
+ */
+
+/** @type {(userOptions?: MdxOptions) => import('@jest/transform').Transformer} */
 function createTransformer(userOptions) {
   return {
     process(sourceText, sourcePath, config, options) {
@@ -19,7 +23,7 @@ function createTransformer(userOptions) {
  * @type {import('@jest/transform').Transformer}
  */
 const transformer = {
-  ...createTransformer({}),
+  ...createTransformer(),
   createTransformer,
 }
 

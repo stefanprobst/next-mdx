@@ -17,7 +17,7 @@ at the top of an `.md` file. This plugin adds that (following the
 
 ```js
 // next.config.js
-const withMdx = require('@stefanprobst/next-mdx')()
+const withMdx = require("@stefanprobst/next-mdx")()
 
 const nextConfig = {
   /** ... */
@@ -29,6 +29,7 @@ module.exports = withMdx(nextConfig)
 ## Configuration
 
 - `extension`: regex of file extensions to handle, defaults to `/\.(md|mdx)$`
+- `exclude`: regex of files to exclude
 - `options`: options for `@mdx-js/loader`
 
 ## Add Typescript

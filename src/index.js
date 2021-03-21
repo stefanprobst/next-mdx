@@ -1,7 +1,15 @@
 /**
+ * @typedef {{ remarkPlugins?: Array<import('unified').Plugin>; rehypePlugins?: Array<import('unified').Plugin> }} MdxOptions
+ */
+
+/**
+ * @typedef {{ extension?: RegExp; exclude?: RegExp; options?: MdxOptions }} PluginOptions
+ */
+
+/**
  * Create Next.js plugin for mdx.
  *
- * @param {{ remarkPlugins: Array<import('unified').Plugin>, rehypePlugins: Array<import('unified').Plugin> }} pluginOptions
+ * @param {PluginOptions} [pluginOptions] Options
  */
 function createMdxPlugin(pluginOptions = {}) {
   return function createNextConfig(nextConfig = {}) {
