@@ -1,8 +1,7 @@
-const matter = require('gray-matter')
+const processors = require('./processors')
 
 module.exports = function frontmatter(source) {
   const callback = this.async()
-  const { content, data } = matter(source)
-  const code = `export const metadata = ${JSON.stringify(data)};\n\n${content}`
+  const code = processors.frontmatter(source)
   return callback(null, code)
 }

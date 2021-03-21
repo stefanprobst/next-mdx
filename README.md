@@ -42,3 +42,18 @@ To add support for importing `.mdx` files in Next.js, add the following to
 
 This will add support for the mdx content as the default export, and a
 `metadata` named export for metadata.
+
+### Jest
+
+If you want mdx content to be transformed when using `jest`, you can reference
+the included jest transformer in your `jest.config.json`:
+
+```json
+// jest.config.json
+{
+  "transform": {
+    "\\.(js|jsx|ts|tsx)$": "babel-jest",
+    "\\.(md|mdx)$": "@stefanprobst/next-mdx/jest"
+  }
+}
+```
