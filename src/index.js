@@ -52,3 +52,4 @@ function createMdxPlugin(pluginOptions = {}) {
 }
 
 module.exports = createMdxPlugin
+module.exports.defaults = defaultOptions
