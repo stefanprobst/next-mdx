@@ -1,18 +1,20 @@
-const { process } = require('babel-jest')
-const processors = require('./processors')
+const babel = require('babel-jest').default
+const {
+  createFormatAwareProcessors,
+} = require('xdm/lib/util/create-format-aware-processors')
 
 /**
- * @typedef {{ remarkPlugins?: Array<import('unified').Plugin>; rehypePlugins?: Array<import('unified').Plugin> }} MdxOptions
+ * @typedef {import('xdm/lib/compile').CompileOptions} MdxOptions
  */
 
-/** @type {(userOptions?: MdxOptions) => import('@jest/transform').Transformer} */
-function createTransformer(userOptions) {
+/** @type {(userOptions?: MdxOptions) => import('@jest/transform').SyncTransformer} */
+function createTransformer(userOptions = {}) {
   return {
-    process(sourceText, sourcePath, config, options) {
-      const code = processors.frontmatter(sourceText)
-      const jsx = processors.mdx(code, userOptions)
-      const processed = process(jsx, sourcePath, config, options)
-      return 'code' in processed ? processed.code : processed
+    process(sourceText, sourcePath, transformOptions) {
+      const xdm = createFormatAwareProcessors(userOptions)
+      const jsx = String(xdm.processSync(sourceText))
+      const processed = babel.process(jsx, sourcePath, transformOptions)
+      return typeof processed === 'string' ? processed : processed.code
     },
   }
 }
@@ -20,7 +22,7 @@ function createTransformer(userOptions) {
 /**
  * Jest transformer for mdx.
  *
- * @type {import('@jest/transform').Transformer}
+ * @type {import('@jest/transform').SyncTransformer}
  */
 const transformer = {
   ...createTransformer(),

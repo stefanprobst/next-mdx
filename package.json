@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-mdx",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "repository": "git@github.com:stefanprobst/next-mdx.git",
@@ -18,49 +18,50 @@
     "format": "prettier . -l --ignore-path .gitignore",
     "format:fix": "yarn format --write",
     "lint": "eslint . --ignore-path .gitignore",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "test": "jest --passWithNoTests",
+    "validate": "yarn run format && yarn run lint && yarn run test"
+  },
+  "engines": {
+    "node": "14.x",
+    "yarn": "^1.x"
   },
   "dependencies": {
-    "@mdx-js/loader": "^1.6.19",
-    "@mdx-js/mdx": "^1.6.22",
-    "gray-matter": "^4.0.2"
+    "remark-frontmatter": "^3.0.0",
+    "remark-gfm": "^1.0.0",
+    "xdm": "^1.12.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "@stefanprobst/commitlint-config": "^1.0.1",
-    "@stefanprobst/eslint-config-node": "^1.0.6",
-    "@stefanprobst/prettier-config": "^1.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.6.1",
-    "@typescript-eslint/parser": "^4.6.1",
-    "eslint": "^7.12.1",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-import-resolver-typescript": "^2.3.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.1.0",
+    "@commitlint/cli": "^13.1.0",
+    "@stefanprobst/commitlint-config": "^1.0.2",
+    "@stefanprobst/eslint-config-node": "^2.0.1",
+    "@stefanprobst/prettier-config": "^1.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.3.0",
-    "jest": "^26.6.3",
-    "lint-staged": "^10.5.1",
-    "next": "^10.0.1",
-    "prettier": "^2.1.2",
-    "react": "^17.0.1",
-    "typescript": "^4.0.5"
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
+    "lint-staged": "^11.1.2",
+    "next": "^11.1.0",
+    "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "simple-git-hooks": "^2.6.1",
+    "typescript": "^4.3.5"
   },
   "peerDependencies": {
-    "babel-jest": "^26.0.0",
-    "next": "^9.5.0||^10.0.0",
-    "react": "^16.10.0||^17.0.0"
+    "babel-jest": "^27.0.0",
+    "next": "^11.0.0",
+    "react": "^17.0.0"
   },
   "peerDependenciesMeta": {
     "babel-jest": {
       "optional": true
     }
-  },
-  "engines": {
-    "node": ">=12.9",
-    "yarn": "^1"
   },
   "commitlint": {
     "extends": [
@@ -74,25 +75,16 @@
     "parserOptions": {
       "project": "./tsconfig.json"
     },
-    "overrides": [
-      {
-        "files": "*.d.ts",
-        "rules": {
-          "import/export": "off",
-          "import/no-duplicates": "off"
-        }
-      }
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
+    "ignorePatterns": "*.d.ts"
   },
   "lint-staged": {
     "*.(js|ts)": "eslint --cache --fix",
     "*.(json|md)": "prettier --write"
   },
-  "prettier": "@stefanprobst/prettier-config"
+  "prettier": "@stefanprobst/prettier-config",
+  "simple-git-hooks": {
+    "commit-msg": "yarn commitlint --edit",
+    "pre-commit": "yarn lint-staged",
+    "pre-push": "yarn run validate"
+  }
 }

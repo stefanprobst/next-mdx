@@ -1,32 +1,40 @@
 /**
- * @typedef {{ remarkPlugins?: Array<import('unified').Plugin>; rehypePlugins?: Array<import('unified').Plugin> }} MdxOptions
+ * @typedef {import('xdm/lib/compile').CompileOptions} MdxOptions
+ * @typedef {{ exclude?: RegExp; options?: MdxOptions }} PluginOptions
+ * @typedef {{ [key: string]: any }} WebpackConfig
+ * @typedef {{ [key: string]: any; webpack?: (config: WebpackConfig, options: any) => WebpackConfig }} NextConfig
  */
 
-/**
- * @typedef {{ extension?: RegExp; exclude?: RegExp; options?: MdxOptions }} PluginOptions
- */
+/** @type {MdxOptions} */
+const defaultOptions = {
+  format: 'detect',
+  remarkPlugins: [require('remark-frontmatter'), require('remark-gfm')],
+}
 
 /**
- * Create Next.js plugin for mdx.
+ * Creates Next.js plugin for mdx.
  *
  * @param {PluginOptions} [pluginOptions] Options
  */
 function createMdxPlugin(pluginOptions = {}) {
-  return function createNextConfig(nextConfig = {}) {
+  const xdmOptions = {
+    ...defaultOptions,
+    ...pluginOptions.options,
+  }
+
+  /** @type {(nextConfig: NextConfig) => NextConfig} */
+  function createNextConfig(nextConfig = {}) {
     return {
       ...nextConfig,
       webpack(config, options) {
         config.module.rules.push({
-          test: pluginOptions.extension || /\.(md|mdx)$/,
+          test: /\.(md|mdx)$/,
           exclude: pluginOptions.exclude,
           use: [
             options.defaultLoaders.babel,
             {
-              loader: require.resolve('@mdx-js/loader'),
-              options: pluginOptions.options,
-            },
-            {
-              loader: require.resolve('./frontmatter'),
+              loader: require.resolve('xdm/webpack.cjs'),
+              options: xdmOptions,
             },
           ],
         })
@@ -39,6 +47,8 @@ function createMdxPlugin(pluginOptions = {}) {
       },
     }
   }
+
+  return createNextConfig
 }
 
 module.exports = createMdxPlugin
