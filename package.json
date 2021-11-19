@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-mdx",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "repository": "git@github.com:stefanprobst/next-mdx.git",
@@ -23,13 +23,13 @@
     "validate": "yarn run format && yarn run lint && yarn run test"
   },
   "engines": {
-    "node": "14.x",
+    "node": ">=14.17",
     "yarn": "^1.x"
   },
   "dependencies": {
-    "remark-frontmatter": "^3.0.0",
-    "remark-gfm": "^1.0.0",
-    "xdm": "^1.12.1"
+    "remark-frontmatter": "^4.0.1",
+    "remark-gfm": "^3.0.1",
+    "xdm": "^3.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
